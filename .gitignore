@@ -1,0 +1,6 @@
+node_modules/
+.idea/
+cypress/fixtures/example.json
+cypress/reports/
+mochawesome-report/
+dist/

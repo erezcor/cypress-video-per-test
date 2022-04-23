@@ -1,0 +1,35 @@
+{
+  "name": "cypress-video-per-test",
+  "version": "1.0.0",
+  "description": "A Cypress plugin for creating a video for each test, instead of each spec",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "",
+    "test": "mocha tests/*.js --timeout 100000"
+  },
+  "type": "module",
+  "author": "erezcor",
+  "license": "ISC",
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "lodash": "^4.17.21"
+  },
+  "peerDependencies": {
+    "cypress": ">=9.5.4"
+  },
+  "devDependencies": {
+    "@types/fluent-ffmpeg": "^2.1.20",
+    "chai": "^4.3.6",
+    "eslint": "^8.13.0",
+    "mocha": "^9.2.2",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.2.1",
+    "mochawesome-report-generator": "^6.2.0",
+    "typescript": "^4.6.3"
+  }
+}

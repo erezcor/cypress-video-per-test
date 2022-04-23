@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "es5",
+    "lib": [
+      "es5",
+      "dom",
+      "es2015.promise"
+    ],
+    "types": ["cypress"],
+    "outDir": "dist",
+    "declaration": true
+  },
+  "include": ["**/*.ts"]
+}

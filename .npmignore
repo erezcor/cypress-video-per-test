@@ -1,0 +1,5 @@
+cypress/
+.idea/
+tests/
+cypress.json
+tsconfig.json
