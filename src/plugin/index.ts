@@ -30,10 +30,10 @@ function cutVideosOfRun(results: CypressRunResult, config: ResolvedConfigOptions
             const specVideoPath: string = run.video
 
             run.tests.forEach(test => {
-                if (shouldCutVideo(test, options)) {
+                if (shouldCreateVideoForTest(test, options)) {
                     let newVideoDuration: number
 
-                    const newVideoPath: string = getNewVideoPath(test, config)
+                    const newVideoPath: string = getNewVideoPath(test.title, config)
                     const testStartTimeInSeconds: number = millisToSeconds(test.attempts[0].videoTimestamp)
 
                     if (options.createVideoOfMultipleAttempts) {
@@ -68,25 +68,22 @@ function checkRequirementsForSpecificRun(run: RunResult) {
 
 function checkRequirementsToRunPlugin(results: CypressRunResult, config: ResolvedConfigOptions) {
     if (!config.video) {
-        throw CYPRESS_DIDNT_RECORD_VIDEOS_EXCEPTION
+        console.error(CYPRESS_DIDNT_RECORD_VIDEOS_EXCEPTION)
     }
 }
 
-function getNewVideoPath(test: TestResult, config: ResolvedConfigOptions) {
-    return config.videosFolder + "\\" + formatTestTitleToFileName(test) + '.mp4'
+function getNewVideoPath(testTitle: string[], config: ResolvedConfigOptions) {
+    return config.videosFolder + "\\" + formatTestTitleToFileName(testTitle) + '.mp4'
 }
 
-function shouldCutVideo(test: TestResult, options: VideoCutterOptions): boolean {
+function shouldCreateVideoForTest(test: TestResult, options: VideoCutterOptions): boolean {
     return test.displayError != null || options.cutPassingTestsVideos
 }
 
-function formatTestTitleToFileName(test: TestResult): string {
-    const space: string = ' '
-    const empty: string = ''
+function formatTestTitleToFileName(testTitle: string[]): string {
     const badCharactersRegex: RegExp = /[<>:"/\|?*]/g
-    const signsRegex: RegExp = /[&\/\\#,+()$~%.'":*?<>{}]/g
 
-    return test.title.join(space).replace(badCharactersRegex, empty)
+    return testTitle.join(' ').replace(badCharactersRegex, '')
 }
 
 module.exports = main

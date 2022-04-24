@@ -10,6 +10,6 @@
   },
   "env": {
     "cutPassingTestsVideos": false,
-    "createVideoOfAllAttempts": false
+    "createVideoOfAllAttempts": true
   }
 }

@@ -1,17 +1,8 @@
-import {ffmpegErrorText} from "./constants.js";
 import fs from 'fs'
 import {expect} from 'chai';
 
 export function doesFileExist(path) {
     return fs.existsSync(path)
-}
-
-export function getNumberOfFilesInDirectory(path) {
-    return fs.readdirSync(path).length
-}
-
-export function getFileContent(path) {
-    return fs.readFileSync(path, {encoding: 'utf-8'})
 }
 
 export function deleteDirectory(path) {
@@ -27,5 +18,4 @@ export function expectMultipleVideosToBeCutSuccessfully(paths) {
 
 export function expectVideoToBeCutSuccessfully(path) {
     expect(doesFileExist(path)).to.be.true
-    expect(getFileContent(path)).to.not.include(ffmpegErrorText)
 }

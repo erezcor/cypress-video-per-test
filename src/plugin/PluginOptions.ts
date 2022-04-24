@@ -1,13 +1,13 @@
 export type VideoCutterOptions = {
-    cutPassingTestsVideos: boolean,
+    createVideoOfPassingTests: boolean,
     createVideoOfMultipleAttempts: boolean
 }
 
 const DEFAULT_VIDEO_CUTTER_OPTIONS: VideoCutterOptions = {
-    cutPassingTestsVideos: false,
-    createVideoOfMultipleAttempts: false
+    createVideoOfPassingTests: false,
+    createVideoOfMultipleAttempts: true
 }
 
 export function getOptionsOrDefaults(options: VideoCutterOptions): VideoCutterOptions {
-    return Object.assign({}, options, DEFAULT_VIDEO_CUTTER_OPTIONS)
+    return Object.assign(DEFAULT_VIDEO_CUTTER_OPTIONS, options)
 }

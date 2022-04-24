@@ -1,11 +1,10 @@
-import {deleteDirectory, doesFileExist, expectVideoToBeCutSuccessfully, getFileContent} from "./test-utils.js";
+import {deleteDirectory, doesFileExist, expectVideoToBeCutSuccessfully} from "./test-utils.js";
 import {
     alternativeVideoFolderPath,
     badCharactersTestVideoPath,
     defaultVideoFolderPath,
     failingSpecOriginalVideoPath,
     ffmpegErrorTestVideoPath,
-    ffmpegErrorText,
     firstFailingTestVideoPath,
     passingSpecOriginalVideoPath,
     passingTestSpecPath,
@@ -55,9 +54,8 @@ describe('cypress video cutter plugin tests', function () {
             expect(doesFileExist(skippingTestVideoPath)).to.be.false
         });
 
-        it('should create file with error, when ffmpeg fails', () => {
-            expect(doesFileExist(ffmpegErrorTestVideoPath)).to.be.true
-            expect(getFileContent(ffmpegErrorTestVideoPath)).to.include(ffmpegErrorText)
+        it('should not create file, when ffmpeg fails', () => {
+            expect(doesFileExist(ffmpegErrorTestVideoPath)).to.be.false
         });
 
         it('should remove bad characters from video path', () => {

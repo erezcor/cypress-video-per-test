@@ -25,7 +25,7 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "cypress": ">=9.5.4"
+    "cypress": ">=5.0.0"
   },
   "devDependencies": {
     "@types/fluent-ffmpeg": "^2.1.20",
