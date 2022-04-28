@@ -1,21 +1,20 @@
 import {deleteDirectory, doesFileExist, expectVideoToBeCutSuccessfully} from "./test-utils.js";
 import {
-    alternativeVideoFolderPath,
+    alternativeVideoFolderPath, badCharactersSpecPath,
     badCharactersTestVideoPath,
     defaultVideoFolderPath,
-    failingSpecOriginalVideoPath,
+    failingSpecOriginalVideoPath, ffmpegErrorSpecPath,
     ffmpegErrorTestVideoPath,
-    firstFailingTestVideoPath,
+    firstFailingTestVideoPath, multipleFailingTestsSpecPath,
     passingSpecOriginalVideoPath,
     passingTestSpecPath,
-    passingTestVideoPath,
-    singleFailingTestSpecPath,
+    passingTestVideoPath, sameNameTestSpecPath,
+    singleFailingTestSpecPath, skippingTestSpecPath,
     skippingTestVideoPath
 } from "./constants.js";
 
 import cypress from 'cypress'
 import {expect} from 'chai';
-
 
 describe('cypress video cutter plugin tests', function () {
     before(() => {
@@ -28,12 +27,13 @@ describe('cypress video cutter plugin tests', function () {
             this.timeout(1000000);
             await cypress.run({
                 spec: [singleFailingTestSpecPath
-                    // , multipleFailingTestsSpecPath, passingTestSpecPath,
-                    // skippingTestSpecPath, badCharactersSpecPath, sameNameTestSpecPath, ffmpegErrorSpecPath,
-                    // "cypress/integration/flaky-test.spec.js"
+                    , multipleFailingTestsSpecPath, passingTestSpecPath,
+                    skippingTestSpecPath, badCharactersSpecPath, sameNameTestSpecPath, ffmpegErrorSpecPath,
+                    "cypress/integration/flaky-test.spec.js"
                 ]
                     .join(','),
-                browser: "chrome"
+                browser: "chrome",
+                headless: false
                 })
         })
 
@@ -62,10 +62,6 @@ describe('cypress video cutter plugin tests', function () {
             expectVideoToBeCutSuccessfully(badCharactersTestVideoPath)
         });
 
-        it('should present file in mochawesome', () => {
-            // how should I test this shit?
-        });
-
         it('should fail when video name already exists', () => {
             expectVideoToBeCutSuccessfully("")
             // but not override the file! what should it do?
@@ -74,14 +70,6 @@ describe('cypress video cutter plugin tests', function () {
         it('should not edit the original spec videos', () => {
             expectVideoToBeCutSuccessfully(passingSpecOriginalVideoPath)
             expectVideoToBeCutSuccessfully(failingSpecOriginalVideoPath)
-        });
-
-        it('should not create a corrupted files', () => {
-
-        });
-
-        it('should make a video according to timestamp and length', () => {
-
         });
     })
 

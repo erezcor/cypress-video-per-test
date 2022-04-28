@@ -48,7 +48,7 @@ module.exports = (on, config) => {
     on('after:run', results => {
         return require('cypress-video-per-test')(results, config, {
             createVideoForPassingTests: true,
-            createVideoOfMultipleAttempts: true
+            createVideoForAllAttempts: false
         })
     })
 }

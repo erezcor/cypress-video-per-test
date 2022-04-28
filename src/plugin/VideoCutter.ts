@@ -4,10 +4,11 @@ import {FFMPEG_EXCEPTION} from "./Exceptions";
 
 export function cutVideoWithFfmpeg(originalVideoPath: string, newVideoStartTimeInSeconds: number, newVideoDurationInSeconds: number, newVideoPath: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-        ffmpeg(originalVideoPath)
+        ffmpeg()
+            .input(originalVideoPath)
             .setFfmpegPath(ffmpegPath)
-            .setStartTime(newVideoStartTimeInSeconds)
             .setDuration(newVideoDurationInSeconds)
+            .setStartTime(newVideoStartTimeInSeconds)
             .saveToFile(newVideoPath)
             .on('start', (command) => {
                 console.log("Start making video with command: " + command)
@@ -19,6 +20,7 @@ export function cutVideoWithFfmpeg(originalVideoPath: string, newVideoStartTimeI
             })
             .on('end', (stdout, stderr) => {
                 console.log('Success making video')
+                console.log(stdout)
                 resolve()
             })
     })
