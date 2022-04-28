@@ -1,8 +1,6 @@
-import {main} from "../../src/plugin/index.ts";
-
-export default (on, config) => {
+module.exports = (on, config) => {
     on('after:run', results => {
-        return main(results, config, {
+        return require('../../src/plugin/index')(results, config, {
             cutPassingTestsVideos: config.env.cutPassingTestsVideos,
             createVideoOfMultipleAttempts: config.env.createVideoOfMultipleAttempts
         })

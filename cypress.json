@@ -1,15 +1,11 @@
 {
-  "video": true,
-  "videosFolder": "cypress/videos",
-  "videoUploadOnPasses": false,
-  "pluginsFile": "cypress/plugins/index.cjs",
-  "reporter": "mochawesome",
+  "screenshotOnRunFailure": false,
   "reporterOptions": {
     "overwrite": true,
     "reportDir": "cypress/reports"
   },
   "env": {
-    "cutPassingTestsVideos": false,
-    "createVideoOfAllAttempts": false
+    "cutPassingTestsVideos": true,
+    "createVideoOfAllAttempts": true
   }
 }

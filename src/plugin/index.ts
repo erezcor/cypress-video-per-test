@@ -9,7 +9,7 @@ import {
 } from "./Exceptions";
 import {cutVideoWithFfmpeg} from "./VideoCutter";
 import {millisToSeconds} from "./TimeUnitConvertor";
-import * as lodash from "lodash";
+import * as _ from "lodash";
 import {getOptionsOrDefaults, VideoCutterOptions} from "./PluginOptions";
 
 export function main(results: CypressRunResult, config: ResolvedConfigOptions, userOptions?: VideoCutterOptions): Promise<any> {
@@ -30,20 +30,22 @@ function cutVideosOfRun(results: CypressRunResult, config: ResolvedConfigOptions
             const specVideoPath: string = run.video
 
             run.tests.forEach(test => {
-                if (shouldCutVideo(test, options)) {
-                    let newVideoDuration: number
+                if (shouldCreateVideoForTest(test, options)) {
+                    let newVideoDurationInMillis: number
 
-                    const newVideoPath: string = getNewVideoPath(test, config)
+                    const newVideoPath: string = getNewVideoPath(test.title, config)
                     const testStartTimeInSeconds: number = millisToSeconds(test.attempts[0].videoTimestamp)
 
                     if (options.createVideoOfMultipleAttempts) {
                         const attemptsDurations = test.attempts.map(attempt => attempt.duration)
-                        newVideoDuration = lodash.sum(attemptsDurations)
+                        newVideoDurationInMillis = _.sum(attemptsDurations)
                     } else {
-                        newVideoDuration = test.attempts[0].duration
+                        newVideoDurationInMillis = test.attempts[0].duration
                     }
 
-                    let videoPromise = cutVideoWithFfmpeg(specVideoPath, newVideoDuration, testStartTimeInSeconds, newVideoPath)
+                    let newVideoDurationInSeconds: number = millisToSeconds(newVideoDurationInMillis)
+
+                    let videoPromise = cutVideoWithFfmpeg(specVideoPath, testStartTimeInSeconds, newVideoDurationInSeconds, newVideoPath)
 
                     videoPromises.push(videoPromise)
                 }
@@ -68,25 +70,26 @@ function checkRequirementsForSpecificRun(run: RunResult) {
 
 function checkRequirementsToRunPlugin(results: CypressRunResult, config: ResolvedConfigOptions) {
     if (!config.video) {
-        throw CYPRESS_DIDNT_RECORD_VIDEOS_EXCEPTION
+        console.error(CYPRESS_DIDNT_RECORD_VIDEOS_EXCEPTION)
+        return false
+    }
+    else {
+        return true
     }
 }
 
-function getNewVideoPath(test: TestResult, config: ResolvedConfigOptions) {
-    return config.videosFolder + "\\" + formatTestTitleToFileName(test) + '.mp4'
+function getNewVideoPath(testTitle: string[], config: ResolvedConfigOptions) {
+    return config.videosFolder + "\\" + formatTestTitleToFileName(testTitle) + '.mp4'
 }
 
-function shouldCutVideo(test: TestResult, options: VideoCutterOptions): boolean {
-    return test.displayError != null || options.cutPassingTestsVideos
+function shouldCreateVideoForTest(test: TestResult, options: VideoCutterOptions): boolean {
+    return test.displayError != null || options.createVideoOfPassingTests
 }
 
-function formatTestTitleToFileName(test: TestResult): string {
-    const space: string = ' '
-    const empty: string = ''
-    const badCharactersRegex: RegExp = /[<>:"/\|?*]/g
-    const signsRegex: RegExp = /[&\/\\#,+()$~%.'":*?<>{}]/g
+function formatTestTitleToFileName(testTitle: string[]): string {
+    const badCharactersRegex: RegExp = /[/\\?%*:|"<>]/g
 
-    return test.title.join(space).replace(badCharactersRegex, empty)
+    return testTitle.join(' ').replace(badCharactersRegex, '')
 }
 
 module.exports = main

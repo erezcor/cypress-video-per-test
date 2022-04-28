@@ -8,21 +8,27 @@
     "dist/"
   ],
   "scripts": {
-    "build": "",
+    "sanity": "npm run build && cypress run --spec cypress/integration/sanity.spec.js",
+    "build": "tsc",
     "test": "mocha tests/*.js --timeout 100000"
   },
-  "type": "module",
   "author": "erezcor",
   "license": "ISC",
+  "homepage": "https://github.com/erezcor/cypress-video-per-test#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/erezcor/cypress-video-per-test.git"
+  },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "fluent-ffmpeg": "^2.1.2",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "cypress": ">=9.5.4"
+    "cypress": ">=5.0.0"
   },
   "devDependencies": {
+    "@cypress/skip-test": "^2.6.1",
     "@types/fluent-ffmpeg": "^2.1.20",
     "chai": "^4.3.6",
     "eslint": "^8.13.0",
