@@ -1,8 +1,11 @@
 module.exports = (on, config) => {
+    on('before:spec', results => {
+
+    })
     on('after:run', results => {
         return require('../../src/plugin/index')(results, config, {
-            cutPassingTestsVideos: config.env.cutPassingTestsVideos,
-            createVideoOfMultipleAttempts: config.env.createVideoOfMultipleAttempts
+            createVideoForPassingTests: config.env.createVideoForPassingTests,
+            createVideoForAllAttempts: config.env.createVideoForAllAttempts
         })
     })
 }

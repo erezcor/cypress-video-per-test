@@ -9,8 +9,7 @@
   ],
   "scripts": {
     "sanity": "npm run build && cypress run --spec cypress/integration/sanity.spec.js",
-    "build": "tsc",
-    "test": "mocha tests/*.js --timeout 100000"
+    "build": "tsc"
   },
   "author": "erezcor",
   "license": "ISC",
@@ -25,7 +24,7 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "cypress": ">=5.0.0"
+    "cypress": "^9.0.0"
   },
   "devDependencies": {
     "@cypress/skip-test": "^2.6.1",

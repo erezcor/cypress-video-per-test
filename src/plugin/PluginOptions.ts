@@ -1,11 +1,11 @@
 export type VideoCutterOptions = {
-    createVideoOfPassingTests: boolean,
-    createVideoOfMultipleAttempts: boolean
+    createVideoForPassingTests: boolean,
+    createVideoForAllAttempts: boolean
 }
 
 const DEFAULT_VIDEO_CUTTER_OPTIONS: VideoCutterOptions = {
-    createVideoOfPassingTests: false,
-    createVideoOfMultipleAttempts: true
+    createVideoForPassingTests: false,
+    createVideoForAllAttempts: true
 }
 
 export function getOptionsOrDefaults(options: VideoCutterOptions): VideoCutterOptions {

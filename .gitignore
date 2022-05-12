@@ -6,3 +6,5 @@ cypress/videos/
 cypress/screenshots/
 mochawesome-report/
 dist/
+*.iml
+package-lock.json

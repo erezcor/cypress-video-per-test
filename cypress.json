@@ -1,11 +1,12 @@
 {
   "screenshotOnRunFailure": false,
+  "reporter": "mochawesome",
   "reporterOptions": {
     "overwrite": true,
     "reportDir": "cypress/reports"
   },
   "env": {
-    "cutPassingTestsVideos": true,
-    "createVideoOfAllAttempts": true
+    "createVideoForPassingTests": true,
+    "createVideoForAllAttempts": true
   }
 }
